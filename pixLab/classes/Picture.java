@@ -222,9 +222,6 @@ public class Picture extends SimplePicture
     Pixel[][] pixels = this.getPixels2D();
     Pixel botLeftPixel = null;
     Pixel topRightPixel = null;
-    /*int height = pixels.length;
-    int length = pixels[0].length;
-    if (height<length){*/
         for (int row = 0; row < pixels[0].length && row<pixels.length; row++){
             for (int col = 0; col < row; col++){
                 botLeftPixel = pixels[row][col];
@@ -232,16 +229,6 @@ public class Picture extends SimplePicture
                 topRightPixel.setColor(botLeftPixel.getColor());
             }
         }
-    /*}
-    for (int row = 0; row < pixels.length; row++)
-    {
-      for (int col = 0; col < row; col++)
-      {
-        botLeftPixel = pixels[row][col];
-        topRightPixel = pixels[col][row];
-        topRightPixel.setColor(botLeftPixel.getColor());
-      }
-    } */
   }
   
   /** Mirror just part of a picture of a temple */
@@ -258,6 +245,30 @@ public class Picture extends SimplePicture
     {
       // loop from 13 to just before the mirror point
       for (int col = 13; col < mirrorPoint; col++)
+      {
+        
+        leftPixel = pixels[row][col];      
+        rightPixel = pixels[row]                       
+                         [mirrorPoint - col + mirrorPoint];
+        rightPixel.setColor(leftPixel.getColor());
+        count+=1;
+      }
+    }
+    System.out.println(count);
+  }
+  public void mirrorSnowman()
+  {
+    int mirrorPoint = 205;
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    int count = 0;
+    Pixel[][] pixels = this.getPixels2D();
+    
+    // loop through the rows
+    for (int row = 157; row < 195; row++)
+    {
+      // loop from 13 to just before the mirror point
+      for (int col = 104; col < mirrorPoint; col++)
       {
         
         leftPixel = pixels[row][col];      
