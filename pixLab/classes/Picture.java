@@ -121,6 +121,7 @@ public class Picture extends SimplePicture
         pixelObj.setBlue(255-pixelObj.getBlue());
       }
     }
+    //this.write("negative.jpg");
   }
   public void grayscale()
   {
@@ -135,6 +136,7 @@ public class Picture extends SimplePicture
         pixelObj.setBlue(grayVal);
       }
     }
+    //this.write("grayscale.jpg");
   }
   public void fixUnderwater()
   {
@@ -148,6 +150,7 @@ public class Picture extends SimplePicture
           }
       }
     }
+    //this.write("fishenhance.jpg");
   }
   
   /** Method that mirrors the picture around a 
@@ -168,6 +171,7 @@ public class Picture extends SimplePicture
         rightPixel.setColor(leftPixel.getColor());
       }
     } 
+    //this.write("vertical.jpg");
   }
   public void mirrorVerticalRightToLeft()
   {
@@ -184,6 +188,7 @@ public class Picture extends SimplePicture
         leftPixel.setColor(rightPixel.getColor());
       }
     } 
+    //this.write("righttoleft.jpg");
   }
   public void mirrorHorizontal()
   {
@@ -229,6 +234,7 @@ public class Picture extends SimplePicture
                 topRightPixel.setColor(botLeftPixel.getColor());
             }
         }
+    //this.write("diagonal.jpg");
   }
   
   /** Mirror just part of a picture of a temple */
@@ -237,7 +243,7 @@ public class Picture extends SimplePicture
     int mirrorPoint = 276;
     Pixel leftPixel = null;
     Pixel rightPixel = null;
-    int count = 0;
+    //int count = 0;
     Pixel[][] pixels = this.getPixels2D();
     
     // loop through the rows
@@ -251,34 +257,60 @@ public class Picture extends SimplePicture
         rightPixel = pixels[row]                       
                          [mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
-        count+=1;
+        //count+=1;
       }
     }
-    System.out.println(count);
+    //System.out.println(count);
+    //this.write("mirrortemple.jpg");
   }
   public void mirrorSnowman()
   {
-    int mirrorPoint = 205;
+    int mirrorPoint = 192;
+    Pixel topPixel = null;
+    Pixel bottomPixel = null;
+    Pixel[][] pixels = this.getPixels2D();
+    // loop through the rows
+    for (int row = 158; row < mirrorPoint; row++)
+    {
+      // loop from 13 to just before the mirror point
+      for (int col = 104; col < 174; col++)
+      {
+        topPixel = pixels[row][col];      
+        bottomPixel = pixels[mirrorPoint-row+mirrorPoint][col];
+        bottomPixel.setColor(topPixel.getColor());
+      }
+    }
+    mirrorPoint = 197;
+    for (int row = 169; row < mirrorPoint; row++)
+    {
+      // loop from 13 to just before the mirror point
+      for (int col = 235; col < 295; col++)
+      {
+        topPixel = pixels[row][col];      
+        bottomPixel = pixels[mirrorPoint-row+mirrorPoint][col];
+        bottomPixel.setColor(topPixel.getColor());
+      }
+    }
+  }
+  public void mirrorGull()
+  {
+    int mirrorPoint = 344;
     Pixel leftPixel = null;
     Pixel rightPixel = null;
-    int count = 0;
     Pixel[][] pixels = this.getPixels2D();
     
     // loop through the rows
-    for (int row = 157; row < 195; row++)
+    for (int row = 234; row < 320; row++)
     {
       // loop from 13 to just before the mirror point
-      for (int col = 104; col < mirrorPoint; col++)
+      for (int col = 238; col < mirrorPoint; col++)
       {
-        
         leftPixel = pixels[row][col];      
         rightPixel = pixels[row]                       
                          [mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
-        count+=1;
       }
     }
-    System.out.println(count);
   }
   
   /** copy from the passed fromPic to the
@@ -311,7 +343,29 @@ public class Picture extends SimplePicture
       }
     }   
   }
-
+  public void copy(Picture fromPic, int fromStartRow, int fromEndRow, int fromStartCol, 
+                    int fromEndCol, int startRow, int startCol){
+    Pixel fromPixel = null;
+    Pixel toPixel = null;
+    Pixel[][] toPixels = this.getPixels2D();
+    Pixel[][] fromPixels = fromPic.getPixels2D();
+    for (int fromRow = fromStartRow, toRow = startRow; 
+         fromRow < fromEndRow &&
+         toRow < toPixels.length; 
+         fromRow++, toRow++)
+    {
+      for (int fromCol = fromStartCol, toCol = startCol; 
+           fromCol < fromEndCol &&
+           toCol < toPixels[0].length;  
+           fromCol++, toCol++)
+      {
+        fromPixel = fromPixels[fromRow][fromCol];
+        toPixel = toPixels[toRow][toCol];
+        toPixel.setColor(fromPixel.getColor());
+      }
+    }   
+  }
+  
   /** Method to create a collage of several pictures */
   public void createCollage()
   {
@@ -327,6 +381,23 @@ public class Picture extends SimplePicture
     this.copy(flower2,500,0);
     this.mirrorVertical();
     this.write("collage.jpg");
+  }
+  public void createCollage2()
+  {
+    Picture flower1 = new Picture("flower1.jpg");
+    Picture flower2 = new Picture("flower2.jpg");
+    this.copy(flower1,0, 32, 28, 70, 0,0);
+    this.copy(flower2,0, 32, 28, 70, 100,0);
+    this.copy(flower1,0, 32, 28, 70, 200,0);
+    Picture flowerNoBlue = new Picture(flower2);
+    flowerNoBlue.zeroBlue();
+    this.copy(flowerNoBlue,300,0);
+    flower1.mirrorDiagonal();
+    flower2.grayscale();
+    this.copy(flower1,400,0);
+    this.copy(flower2,300,0);
+    this.mirrorVertical();
+    this.write("collage2.jpg");
   }
   
   
@@ -354,6 +425,47 @@ public class Picture extends SimplePicture
           leftPixel.setColor(Color.WHITE);
       }
     }
+  }
+  public void edgeDetection2(int edgeDist)
+  {
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    Pixel topPixel = null;
+    Pixel bottomPixel = null;
+    Pixel[][] pixels = this.getPixels2D();
+    Color rightColor = null;
+    Color bottomColor = null;
+    for (int row = 0; row < pixels.length; row++)
+    {
+      for (int col = 0; 
+           col < pixels[0].length-1; col++)
+      {
+        leftPixel = pixels[row][col];
+        rightPixel = pixels[row][col+1];
+        rightColor = rightPixel.getColor();
+        if (leftPixel.colorDistance(rightColor) > 
+            edgeDist)
+          leftPixel.setColor(Color.BLACK);
+        else
+          leftPixel.setColor(Color.WHITE);
+      }
+    }
+    for (int row = 0; row < pixels.length-1; row++)
+    {
+      for (int col = 0; 
+           col < pixels[0].length; col++)
+      {
+        topPixel = pixels[row][col];
+        bottomPixel = pixels[row+1][col];
+        bottomColor = bottomPixel.getColor();
+        if (topPixel.colorDistance(bottomColor) > 
+            edgeDist)
+          topPixel.setColor(Color.BLACK);
+        else
+          bottomPixel.setColor(Color.WHITE);
+      }
+    }
+    //this.write("sketchedgedetect.jpg");
   }
   
   
