@@ -41,7 +41,7 @@ public class Motorcycle extends Vehicles
      * toString method for motorcycle
      */
     public String toString(){
-        String output = "\nMotorcylce\nEngine size: " + this.engineSize + super.toString();
+        String output = "\nMotorcycle\nEngine size: " + this.engineSize + super.toString();
         return output;
     }
 }

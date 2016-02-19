@@ -1,4 +1,23 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Trucks()
-numComments=1
+comment0.text=\r\n\ Constructor\ for\ general\ Trucks\ object\r\n
+comment1.params=trailer
+comment1.target=Trucks(boolean)
+comment1.text=\r\n\ Constructor\ for\ truck\ with\ trailer\r\n
+comment2.params=trailer\ numExhaustStacks
+comment2.target=Trucks(boolean,\ int)
+comment2.text=\r\n\ Constructor\ for\ truck\ with\ trailer\ and\ exhaust\ stacks\r\n
+comment3.params=trailer\ numExhaustStacks\ color
+comment3.target=Trucks(boolean,\ int,\ java.lang.String)
+comment3.text=\r\n\ Constructor\ for\ new\ truck\ with\ trailer\ and\ exhaust\ stacks\r\n
+comment4.params=trailer\ numExhaustStacks\ color\ currentMileage
+comment4.target=Trucks(boolean,\ int,\ java.lang.String,\ int)
+comment4.text=\r\n\ Constructor\ for\ used\ truck\ with\ trailer\ and\ exhaust\ stacks\r\n
+comment5.params=
+comment5.target=void\ changeOil()
+comment5.text=\r\n\ Overrides\ Vehicle\ changeOil\ for\ Trucks\ (requires\ more\ mileage\ before\ changing)\r\n
+comment6.params=
+comment6.target=java.lang.String\ toString()
+comment6.text=\r\n\ Overrides\ Vehicle\ toString\ for\ Trucks\r\n
+numComments=7

@@ -12,6 +12,15 @@ public class VehicleRunner
         // Create an instance of Motorcycle
         Motorcycle joesBike = new Motorcycle("yellow", 1600);
         System.out.println(joesBike);
+        //Creates instance of Racecar (hw assignment)
+        Racecar dadsDreamCar = new Racecar("blue", 2014, "WRX", true);
+        //Creates instance of Motorcycle (hw assignment)
+        Motorcycle myRide= new Motorcycle("black", 1600);
+        //Creates instance of Trucks (hw assignment)
+        Trucks workTruck= new Trucks(true, 2, "red");
+        //Prints out the newly made Car and Motorcycle objects
+        System.out.println(dadsDreamCar);
+        System.out.println(myRide);
         // Compare instance variabless  The == sign works for that
         boolean isSameColor = (marysCar.getColor() == joesBike.getColor());
         System.out.println("\nMary's car and Joe's Bike the same color is: " + isSameColor);
@@ -29,5 +38,7 @@ public class VehicleRunner
         // Dang, Dave puts the miles on, but Mary changes the oil. Is it still a Vehicle?
         System.out.println("\nIs Mary's car still a Vehicle? " +
             (marysCar instanceof Vehicles));
+        //Prints truck info
+        System.out.println("But what about this new truck thing? " + workTruck);
     }
 }
